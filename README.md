@@ -1,4 +1,4 @@
-# DC31_SAO - SEGaSaurus
+# DC31_SAO - SEGoSaurus
 
 ![V1 Prototype Board](/pics/DC31_Prototype.png)
 
@@ -10,10 +10,10 @@ Just because things weren't ready for DC31 doesn't mean it's the end of this pro
 
 The v1 prototype boards include a 4pin connector with 1.0 mm spacing. This was smaller than I had originally intended and future revisions will have 2.54mm spacing. They can still be used with some very small guaged(30ga) solid core wire. With the narrow side pointed down, the pinout of the board is as follows:
 
-1: GND
-2: VCC (3.3V/5V)
-3: SCL/SCK  (I2c Clock)
-4: SDA (I2c Data)
+1. GND
+2. VCC (3.3V/5V)
+3. SCL/SCK  (I2c Clock)
+4. SDA (I2c Data)
 
 Because this is conector is effectively just an I2C breakout, any microcontroller can be used with just the display board.
 ![V1 Display PCB](/pics/displayBoard.png)
@@ -22,7 +22,7 @@ Because this is conector is effectively just an I2C breakout, any microcontrolle
 
 The v1 prototype boards use a very simple circuit with just the 14-segment and an MCP23017 digital I/O expander. This IC allows us to drive and sink each pin in a dynamic fashion. The catch is that due to the pinout of the display a single sink pin and two source pins can drive two different segments. e.g. if we have sink pin 14 pulled down then pin 16 sourcing voltage, sourcing voltage on pin1 would result in two different segments on the same digit lit up. While this can be useful in some cases it generally would cause odd characters to show up.
 
-The JMF-4473BP3-59P6.8 display is included on the v1 prototype boards. This display is available from Sparkfun here:
+The JMF-4473BP3-59P6.8 display is included on the v1 prototype boards. This display is available from Sparkfun here: https://www.sparkfun.com/products/21213
 
 ## The Code
 
