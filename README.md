@@ -38,3 +38,14 @@ This project uses the following libraries:
 
 * Adafruit MCP23017 Arduino Library
 This library can be obtained here: https://github.com/adafruit/Adafruit-MCP23017-Arduino-Library or through the integrated Arduino Libraries manager. There are a few dependencies that the Libraries Boards Manager will auto install for you, so this is the reccomended method if you're lazy like me.
+
+
+## Future Updates
+
+* Better Labels on PCB
+* HTML Based Character creator utility
+* Code Cleanup
+* Scrolling Funciton
+* Replace CH340N with CP1202 or similar
+* Possibly use USB-C instead of USB-A
+* Fix board size
