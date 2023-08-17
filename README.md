@@ -1,6 +1,8 @@
 # DC31_SAO - SEGaSaurus
 
-This repo is for a custom SAO to fit the Defcon31 badge. Unfortunately, the actual SAO was never fully produced before DC31 due to timing and production issues. As a result I had the only functional prototype. The goal was to have an double board SAO with ESP11F and 14 segment Alphanumeric display that would display Wifi SSIDs OR a customized message.
+![V1 Prototype Board](/pics/DC31_Prototype.png)
+
+This repo is for a custom SAO to fit the Defcon31 badge. Unfortunately, the actual SAO was never fully produced before DC31 due to timing and production issues. As a result I had the only functional prototype. The goal was to have an double board SAO with ESP12F and 14 segment Alphanumeric display that would display Wifi SSIDs OR a customized message.
 
 Just because things weren't ready for DC31 doesn't mean it's the end of this project, it will continue and (hopefully) be ready or at least the basis for DC32.
 
@@ -14,6 +16,7 @@ The v1 prototype boards include a 4pin connector with 1.0 mm spacing. This was s
 4: SDA (I2c Data)
 
 Because this is conector is effectively just an I2C breakout, any microcontroller can be used with just the display board.
+![V1 Display PCB](/pics/displayBoard.png)
 
 ## Display Board
 
