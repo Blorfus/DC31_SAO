@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8" />
+<title></title>
+<style type="text/css"><!--
+ul {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+  width: 60px;
+}
+ li {
+  display: block;
+  width: 300px;
+}
+li:hover {
+	background-color: rgb(0, 200, 0, 1);
+	color: #FFFFFF;
+}
+--></style>
+<script src="14SegDisplay.js">
+	
+	
+</script>
+</head>
+<body OnLoad="init()">
+<div>
+	<div id="CharacterDisplayContainer" style="display: inline-block;">
+	  <canvas id="CharacterDisplayCanvas" width="400" height="600" style="border:1px solid #000000;"></canvas> 
+	</div>
+	<div style="display: inline-block;">
+	 <ul>
+		<li><input type="checkbox" id="A" name ="A" value="A" OnClick="changeState(0, this.checked)"/>
+		<label for="A">Segment A</label></li>
+		<li><input type="checkbox" id="B" name ="B" value="B" OnClick="changeState(1, this.checked)"/>
+		<label for="B">Segment B</label></li>
+		<li><input type="checkbox" id="C" name ="C" value="C" OnClick="changeState(2, this.checked)"/>
+		<label for="C">Segment C</label></li>
+		<li><input type="checkbox" id="D" name ="D" value="D" OnClick="changeState(3, this.checked)"/>
+		<label for="D">Segment D</label></li>
+		<li><input type="checkbox" id="E" name ="E" value="E" OnClick="changeState(4, this.checked)"/>
+		<label for="E">Segment E</label></li>
+		<li><input type="checkbox" id="F" name ="F" value="F" OnClick="changeState(5, this.checked)"/>
+		<label for="F">Segment F</label></li>
+		<li><input type="checkbox" id="G1" name ="G1" value="G1" OnClick="changeState(6, this.checked)"/>
+		<label for="G1">Segment G1</label></li>
+		<li><input type="checkbox" id="G2" name ="G2" value="G2" OnClick="changeState(7, this.checked)"/>
+		<label for="G2">Segment G2</label></li>
+		<li><input type="checkbox" id="H" name ="H" value="H" OnClick="changeState(8, this.checked)"/>
+		<label for="H">Segment H</label></li>
+		<li><input type="checkbox" id="J" name ="J" value="J" OnClick="changeState(9, this.checked)"/>
+		<label for="J">Segment J</label></li>
+		<li><input type="checkbox" id="K" name ="K" value="K" OnClick="changeState(10, this.checked)"/>
+		<label for="K">Segment K</label></li>
+		<li><input type="checkbox" id="L" name ="L" value="L" OnClick="changeState(11, this.checked)"/>
+		<label for="L">Segment L</label></li>
+		<li><input type="checkbox" id="M" name ="M" value="M" OnClick="changeState(12, this.checked)"/>
+		<label for="M">Segment M</label></li>
+		<li><input type="checkbox" id="N" name ="N" value="N" OnClick="changeState(13, this.checked)"/>
+		<label for="N">Segment N</label></li>
+	 </ul>
+	</div>
+</div>
+<br>
+<br>
+
+<div id="outputArea">
+	<div id="outputTitle">Output:</div>
+	<div id="output"></div>
+</div>
+
+</body>
+</html>
