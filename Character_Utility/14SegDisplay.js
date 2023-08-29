@@ -14,6 +14,14 @@ var clearFillColor='rgb(255, 255, 255)';
 var clearOutlineColor='rgb(0, 0, 0)';
 
 var currentState = [ false, false, false, false, false, false, false, false, false, false, false, false, false, false ];
+//The following is an identity array that will force all outputs on the display to be off. 
+var output32Bit =  [ false, false, true, true, true, false, false, false, false, false, true, true, true, true, false, false, false, false, true, true, true, false, false, false, false, false, true, true, true, true, false, false ];
+
+//Binary format writeGPIOAB()) GPIOA0 -> GPIOA7 -> GPIOB0 -> GPIOB7
+//Lowbits - 0-15
+//(A)[0]:dig1_l  [1]:dig2_l [2]:seg_K  [3]:seg_J  [4]:seg_N  [5]:seg_L  [6]:D1/D2/DP  [7]:dig4_h  (B)[8]:dig4_l  [9]:dig3_l  [10]:dig3_h [11]:seg_M [12]:seg_H [13]:seg_G2 [14]:dig2_h [15]:dig2_l 
+//HighBits 16-31
+//(A)[16]:dig1_l [17]:dig2_l [18]:seg_D [19]:seg_C [20]:seg_G1 [21]:seg_E [22]:D1/D2/DP [23]:dig4_h (B)[24]:dig4_l [25]:dig3_l [26]:dig3_h [27]:seg_F [28]:seg_B [29]:seg_A [30]:dig2_h [31]:dig2_l 
 
 //The Active channel is marked as 0 since it sinks
 var segmentTruth= [
@@ -41,6 +49,7 @@ function init() {
 	scaleSector();
 	drawAll();
 	console.log("initted");
+	generateOutput();
 }
 
 function calculateScaling() {
@@ -58,8 +67,58 @@ function calculateScaling() {
 	
 }
 
+//Binary format writeGPIOAB()) GPIOA0 -> GPIOA7 -> GPIOB0 -> GPIOB7
+//Lowbits - 0-15
+//(A)[0]:dig1_l  [1]:dig2_l [2]:seg_K  [3]:seg_J  [4]:seg_N  [5]:seg_L  [6]:D1/D2/DP  [7]:dig4_h  (B)[8]:dig4_l  [9]:dig3_l  [10]:dig3_h [11]:seg_M [12]:seg_H [13]:seg_G2 [14]:dig2_h [15]:dig2_l 
+//HighBits 16-31
+//(A)[16]:dig1_l [17]:dig2_l [18]:seg_D [19]:seg_C [20]:seg_G1 [21]:seg_E [22]:D1/D2/DP [23]:dig4_h (B)[24]:dig4_l [25]:dig3_l [26]:dig3_h [27]:seg_F [28]:seg_B [29]:seg_A [30]:dig2_h [31]:dig2_l 
+
 function changeState(elementNum, state){
 	currentState[elementNum] = state;
+	switch(elementNum){
+		case 0: //A
+			output32Bit[29]=state;
+			break;
+		case 1: //B
+			output32Bit[28]=state;
+			break;
+		case 2: //C
+			output32Bit[19]=state;
+			break;
+		case 3: //D
+			output32Bit[18]=state;
+			break;
+		case 4: //E
+			output32Bit[21]=state;
+			break;
+		case 5: //F
+			output32Bit[27]=state;
+			break;	
+		case 6: //G1
+			output32Bit[20]=state;
+			break;
+		case 7: //G2
+			output32Bit[13]=state;
+			break;
+		case 8: //H
+			output32Bit[15]=state;
+			break;
+		case 9: //J
+			output32Bit[3]=state;
+			break;
+		case 10: //K
+			output32Bit[2]=state;
+			break;
+		case 11: //L
+			output32Bit[5]=state;
+			break;
+		case 12: //M
+			output32Bit[11]=state;
+			break;
+		case 13: //N
+			output32Bit[4]=state;
+			break;	
+		}
 	drawAll(); //refresh the canvas
 	generateOutput();
 }
@@ -112,22 +171,18 @@ function dec2bin(dec) {
 
 
 function generateOutput(){
-	var highbits=0011100000111100; // probably need to start with identity values rather than 0...
-	var lowbits=0011100000111100;
-	//high order bit generation
-	for(var h=0; h<7; h++){
-		if (currentState[h]) {
-			highbits = highbits&segmentTruth[h];
+	var outputByteStr="";
+
+	for(let l=0; l<32; l++){
+		if (output32Bit[l]) {
+			outputByteStr+="1";
+			}
+		else {
+			outputByteStr+="0";			
 			}
 		}
-	//low order bit generation
-	for(var l=7; l<14; l++){
-		if (currentState[l]) {
-			lowbits = lowbits&segmentTruth[l];
-				}
-		}
 	let outBox = document.getElementById("output");
-	outBox.innerHTML = dec2bin(highbits&0xFFFF) +"|"+ dec2bin(lowbits&0xFFFF);
+	outBox.innerHTML = outputByteStr;
 }
 
 //===================Segment drawing routines
@@ -319,8 +374,8 @@ function drawSegmentG2(chk) {
 	seg.closePath();
 	
 	if(chk){
-		ctx.fillStyle = highValueColor;
-		ctx.strokeStyle = highValueColor;
+		ctx.fillStyle = lowValueColor;
+		ctx.strokeStyle = lowValueColor;
 		}
 	else {	
 		ctx.fillStyle = clearFillColor;
@@ -342,8 +397,8 @@ function drawSegmentH(chk){
 	seg.closePath();
 	
 	if(chk){
-		ctx.fillStyle = highValueColor;
-		ctx.strokeStyle = highValueColor;
+		ctx.fillStyle = lowValueColor;
+		ctx.strokeStyle = lowValueColor;
 		}
 	else {	
 		ctx.fillStyle = clearFillColor;
@@ -365,8 +420,8 @@ function drawSegmentJ(chk){
 	seg.closePath();
 	
 	if(chk){
-		ctx.fillStyle = highValueColor;
-		ctx.strokeStyle = highValueColor;
+		ctx.fillStyle = lowValueColor;
+		ctx.strokeStyle = lowValueColor;
 		}
 	else {	
 		ctx.fillStyle = clearFillColor;
@@ -389,8 +444,8 @@ function drawSegmentK(chk) {
 	seg.closePath();
 	
 	if(chk){
-		ctx.fillStyle = highValueColor;
-		ctx.strokeStyle = highValueColor;
+		ctx.fillStyle = lowValueColor;
+		ctx.strokeStyle = lowValueColor;
 		}
 	else {	
 		ctx.fillStyle = clearFillColor;
@@ -412,8 +467,8 @@ function drawSegmentL(chk) {
 	seg.closePath();
 	
 	if(chk){
-		ctx.fillStyle = highValueColor;
-		ctx.strokeStyle = highValueColor;
+		ctx.fillStyle = lowValueColor;
+		ctx.strokeStyle = lowValueColor;
 		}
 	else {	
 		ctx.fillStyle = clearFillColor;
@@ -435,8 +490,8 @@ function drawSegmentM(chk) {
 	seg.closePath();
 	
 	if(chk){
-		ctx.fillStyle = highValueColor;
-		ctx.strokeStyle = highValueColor;
+		ctx.fillStyle = lowValueColor;
+		ctx.strokeStyle = lowValueColor;
 		}
 	else {	
 		ctx.fillStyle = clearFillColor;
@@ -459,8 +514,8 @@ function drawSegmentN(chk) {
 	seg.closePath();
 	
 	if(chk){
-		ctx.fillStyle = highValueColor;
-		ctx.strokeStyle = highValueColor;
+		ctx.fillStyle = lowValueColor;
+		ctx.strokeStyle = lowValueColor;
 		}
 	else {	
 		ctx.fillStyle = clearFillColor;
